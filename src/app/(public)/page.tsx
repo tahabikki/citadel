@@ -9,6 +9,7 @@ import { OffersSection } from "@/components/OffersSection";
 import { TestimonialsSection } from "@/components/TestimonialsSection";
 import CitadelDetailsStatic from "@/components/CitadelDetailsStatic";
 import { ScrollReveal } from "@/components/ScrollReveal";
+import { AnimatedStats } from "@/components/AnimatedStats";
 
 export const metadata: Metadata = {
   title: "Citadel Hôtel | Luxury Hotel in Calais, France",
@@ -27,6 +28,7 @@ export default function HomePage() {
         <ScrollReveal animation="fade-left" delay={80}>
           <AboutSection />
         </ScrollReveal>
+        <AnimatedStats />
         <ScrollReveal animation="fade-right" delay={120}>
           <RoomsSection />
         </ScrollReveal>
