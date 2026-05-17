@@ -422,32 +422,61 @@ export default function AdminDashboard() {
             totalPrice: Number(reservation.totalPrice || 0)
           })));
         } else {
-          // Demo reservations
+          // Demo reservations - realistic hotel scenarios
           setReservations([
-            { id: 'r1', guestName: 'John Smith', guestEmail: 'john@email.com', roomNumber: '103', checkIn: '2026-05-15', checkOut: '2026-05-18', status: 'CONFIRMED', totalPrice: 447 },
-            { id: 'r2', guestName: 'Marie Dupont', guestEmail: 'marie@email.com', roomNumber: '105', checkIn: '2026-05-20', checkOut: '2026-05-25', status: 'PENDING', totalPrice: 1745 },
-            { id: 'r3', guestName: 'Hans Mueller', guestEmail: 'hans@email.com', roomNumber: '102', checkIn: '2026-05-10', checkOut: '2026-05-12', status: 'COMPLETED', totalPrice: 258 },
+            { id: 'r1', guestName: 'John Smith', guestEmail: 'john.smith@email.com', roomNumber: '103', checkIn: '2026-05-15', checkOut: '2026-05-18', status: 'ACTIVE', totalPrice: 447 },
+            { id: 'r2', guestName: 'Marie Dupont', guestEmail: 'marie.dupont@free.fr', roomNumber: '105', checkIn: '2026-05-20', checkOut: '2026-05-25', status: 'CONFIRMED', totalPrice: 1745 },
+            { id: 'r3', guestName: 'Hans Mueller', guestEmail: 'hans.mueller@web.de', roomNumber: '102', checkIn: '2026-05-10', checkOut: '2026-05-12', status: 'COMPLETED', totalPrice: 258 },
+            { id: 'r4', guestName: 'Sarah Johnson', guestEmail: 'sarah.j@company.com', roomNumber: '101', checkIn: '2026-05-17', checkOut: '2026-05-19', status: 'CONFIRMED', totalPrice: 178 },
+            { id: 'r5', guestName: 'Pierre Laurent', guestEmail: 'pierre.l@orange.fr', roomNumber: '104', checkIn: '2026-05-22', checkOut: '2026-05-29', status: 'PENDING', totalPrice: 1393 },
+            { id: 'r6', guestName: 'Emma Wilson', guestEmail: 'emma.wilson@outlook.com', roomNumber: '106', checkIn: '2026-05-14', checkOut: '2026-05-16', status: 'CANCELLED', totalPrice: 318 },
+            { id: 'r7', guestName: 'Marco Rossi', guestEmail: 'marco.rossi@gmail.com', roomNumber: '105', checkIn: '2026-05-28', checkOut: '2026-06-02', status: 'CONFIRMED', totalPrice: 2094 },
+            { id: 'r8', guestName: 'Chen Wei', guestEmail: 'chen.wei@company.cn', roomNumber: '104', checkIn: '2026-05-12', checkOut: '2026-05-15', status: 'COMPLETED', totalPrice: 597 },
           ]);
         }
         
         setStaffList(Array.isArray(staffData?.staff) && staffData.staff.length > 0 ? staffData.staff : [
-          { id: 's1', name: 'Marie Dubois', email: 'marie@citadel.com', role: 'Manager', department: 'Administration', status: 'ACTIVE' },
-          { id: 's2', name: 'Jean Martin', email: 'jean@citadel.com', role: 'Receptionist', department: 'Front Desk', status: 'ACTIVE' },
-          { id: 's3', name: 'Sophie Bernard', email: 'sophie@citadel.com', role: 'Housekeeping', department: 'Cleaning', status: 'ACTIVE' },
+          { id: 's1', name: 'Marie Dubois', email: 'marie.dubois@citadel.com', phone: '+33 6 12 34 56 78', role: 'General Manager', department: 'Administration', status: 'ACTIVE', hireDate: '2020-03-15' },
+          { id: 's2', name: 'Jean Martin', email: 'jean.martin@citadel.com', phone: '+33 6 23 45 67 89', role: 'Front Desk Manager', department: 'Reception', status: 'ACTIVE', hireDate: '2021-06-01' },
+          { id: 's3', name: 'Sophie Bernard', email: 'sophie.bernard@citadel.com', phone: '+33 6 34 56 78 90', role: 'Housekeeping Supervisor', department: 'Housekeeping', status: 'ACTIVE', hireDate: '2022-01-10' },
+          { id: 's4', name: 'Pierre Moreau', email: 'pierre.moreau@citadel.com', phone: '+33 6 45 67 89 01', role: 'Maintenance Technician', department: 'Maintenance', status: 'ACTIVE', hireDate: '2022-08-20' },
+          { id: 's5', name: 'Claire Lefebvre', email: 'claire.lefebvre@citadel.com', phone: '+33 6 56 78 90 12', role: 'Head Chef', department: 'Restaurant', status: 'ACTIVE', hireDate: '2021-02-01' },
+          { id: 's6', name: 'Ahmed Benali', email: 'ahmed.benali@citadel.com', phone: '+33 6 67 89 01 23', role: 'Night Auditor', department: 'Reception', status: 'ON_LEAVE', hireDate: '2023-05-15' },
         ]);
         
         setHousekeepingTasks(Array.isArray(housekeepingData?.tasks) ? housekeepingData.tasks : [
-          { id: 'h1', roomNumber: '101', type: 'CLEANING', status: 'COMPLETED', priority: 'HIGH', createdAt: '2026-05-10' },
-          { id: 'h2', roomNumber: '103', type: 'TURNDOWN_SERVICE', status: 'IN_PROGRESS', priority: 'MEDIUM', createdAt: '2026-05-15' },
+          { id: 'h1', roomNumber: '101', type: 'CLEANING', status: 'COMPLETED', priority: 'HIGH', assignedTo: 'Sophie Bernard', notes: 'Deep cleaning required', createdAt: '2026-05-10', completedAt: '2026-05-10' },
+          { id: 'h2', roomNumber: '103', type: 'TURNDOWN_SERVICE', status: 'IN_PROGRESS', priority: 'MEDIUM', assignedTo: 'Sophie Bernard', notes: 'Guest checking in at 3pm', createdAt: '2026-05-15' },
+          { id: 'h3', roomNumber: '105', type: 'CLEANING', status: 'PENDING', priority: 'HIGH', assignedTo: 'Sophie Bernard', notes: 'Prepare for VIP guest - anniversary', createdAt: '2026-05-17' },
+          { id: 'h4', roomNumber: '102', type: 'LINEN_CHANGE', status: 'COMPLETED', priority: 'LOW', assignedTo: 'Marie Dubois', createdAt: '2026-05-12', completedAt: '2026-05-12' },
+          { id: 'h5', roomNumber: '106', type: 'MAINTENANCE', status: 'PENDING', priority: 'HIGH', assignedTo: 'Jean Martin', notes: 'AC not cooling properly', createdAt: '2026-05-16' },
         ]);
         
         setInventoryItems(Array.isArray(inventoryData?.items) ? inventoryData.items : [
-          { id: 'i1', name: 'Towels', category: 'Linens', quantity: 85, minStock: 20, status: 'OK' },
-          { id: 'i2', name: 'Shampoo', category: 'Toiletries', quantity: 45, minStock: 15, status: 'LOW_STOCK' },
+          { id: 'i1', name: 'Bath Towels', category: 'Linens', quantity: 85, unit: 'pieces', minStock: 20, location: 'Storage A', status: 'IN_STOCK' },
+          { id: 'i2', name: 'Hand Towels', category: 'Linens', quantity: 45, unit: 'pieces', minStock: 30, location: 'Storage A', status: 'LOW_STOCK' },
+          { id: 'i3', name: 'Shampoo', category: 'Toiletries', quantity: 45, unit: 'bottles', minStock: 15, location: 'Storage B', status: 'LOW_STOCK' },
+          { id: 'i4', name: 'Conditioner', category: 'Toiletries', quantity: 62, unit: 'bottles', minStock: 15, location: 'Storage B', status: 'IN_STOCK' },
+          { id: 'i5', name: 'Soap Bars', category: 'Toiletries', quantity: 120, unit: 'pieces', minStock: 25, location: 'Storage B', status: 'IN_STOCK' },
+          { id: 'i6', name: 'Coffee Capsules', category: 'Food & Beverage', quantity: 8, unit: 'packs', minStock: 10, location: 'Kitchen', status: 'LOW_STOCK' },
+          { id: 'i7', name: 'Tea Bags', category: 'Food & Beverage', quantity: 200, unit: 'bags', minStock: 50, location: 'Kitchen', status: 'IN_STOCK' },
+          { id: 'i8', name: 'Cleaning Supplies', category: 'Cleaning', quantity: 15, unit: 'kits', minStock: 5, location: 'Cleaning Room', status: 'IN_STOCK' },
         ]);
         
-        setPayments(Array.isArray(paymentsData?.payments) ? paymentsData.payments : []);
-        setUsers(Array.isArray(usersData?.users) ? usersData.users : []);
+        setPayments(Array.isArray(paymentsData?.payments) ? paymentsData.payments : [
+          { id: 'p1', reservationId: 'r1', amount: 447, status: 'PAID', method: 'Credit Card', createdAt: '2026-05-10' },
+          { id: 'p2', reservationId: 'r2', amount: 1745, status: 'PAID', method: 'Credit Card', createdAt: '2026-05-12' },
+          { id: 'p3', reservationId: 'r3', amount: 258, status: 'PAID', method: 'Bank Transfer', createdAt: '2026-05-08' },
+          { id: 'p4', reservationId: 'r4', amount: 178, status: 'PENDING', method: 'Credit Card', createdAt: '2026-05-14' },
+          { id: 'p5', reservationId: 'r5', amount: 1393, status: 'PENDING', method: 'Invoice', createdAt: '2026-05-16' },
+          { id: 'p6', reservationId: 'r6', amount: 318, status: 'REFUNDED', method: 'Credit Card', createdAt: '2026-05-13' },
+        ]);
+        
+        setUsers(Array.isArray(usersData?.users) ? usersData.users : [
+          { id: 'u1', email: 'john.smith@email.com', firstName: 'John', lastName: 'Smith', role: 'GUEST', createdAt: '2024-06-15' },
+          { id: 'u2', email: 'marie.dupont@free.fr', firstName: 'Marie', lastName: 'Dupont', role: 'GUEST', createdAt: '2024-08-22' },
+          { id: 'u3', email: 'admin@citadel.com', firstName: 'Admin', lastName: 'User', role: 'ADMIN', createdAt: '2024-01-01' },
+        ]);
       } catch (error) {
         // All demo data already set above
       }
