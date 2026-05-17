@@ -1,5 +1,3 @@
-import { createJsonStorage } from '../storage/json-storage';
-
 export interface Reservation {
   id: string;
   userId?: string;
@@ -20,47 +18,48 @@ export interface Reservation {
   updatedAt: string;
 }
 
-const reservationStorage = createJsonStorage<Reservation>('reservations.json', []);
+const staticReservations: Reservation[] = [];
 
 export const reservationServiceJson = {
   async getAll(): Promise<Reservation[]> {
-    return reservationStorage.getAll();
+    return staticReservations;
   },
 
   async getById(id: string): Promise<Reservation | undefined> {
-    return reservationStorage.findById(id);
+    return staticReservations.find(r => r.id === id);
   },
 
   async create(item: Partial<Reservation>): Promise<Reservation> {
-    return reservationStorage.create({
-      userId: item.userId,
-      roomId: item.roomId || '',
-      guestName: item.guestName || 'Guest',
-      guestEmail: item.guestEmail || '',
-      guestPhone: item.guestPhone || '',
+    const reservation: Reservation = {
+      id: "demo-" + Date.now(),
+      roomId: item.roomId || "",
+      guestName: item.guestName || "Demo Guest",
+      guestEmail: item.guestEmail || "",
+      guestPhone: item.guestPhone || "",
       checkIn: item.checkIn || new Date().toISOString(),
       checkOut: item.checkOut || new Date().toISOString(),
       guests: item.guests || 1,
       adults: item.adults || 1,
       children: item.children || 0,
       totalPrice: item.totalPrice || 0,
-      status: item.status || 'PENDING',
-      paymentStatus: item.paymentStatus || 'PENDING',
-      specialRequests: item.specialRequests || '',
-    });
+      status: "PENDING",
+      paymentStatus: "PENDING",
+      specialRequests: item.specialRequests || "",
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+    };
+    return reservation;
   },
 
-  async update(id: string, updates: Partial<Reservation>): Promise<Reservation> {
-    const updated = reservationStorage.update(id, updates);
-    if (!updated) throw new Error('Reservation not found');
-    return updated;
+  async update(_id: string, updates: Partial<Reservation>): Promise<Reservation> {
+    return { ...updates } as Reservation;
   },
 
-  async delete(id: string): Promise<boolean> {
-    return reservationStorage.delete(id);
+  async delete(_id: string): Promise<boolean> {
+    return true;
   },
 
-  async search(filter: Partial<Reservation>): Promise<Reservation[]> {
-    return reservationStorage.findMany(filter as any);
+  async search(_filter: Partial<Reservation>): Promise<Reservation[]> {
+    return staticReservations;
   },
 };

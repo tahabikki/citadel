@@ -1,5 +1,3 @@
-import { createJsonStorage, BaseRecord } from '../storage/json-storage';
-
 export interface CrudService<T extends { id: string }> {
   getAll(): Promise<T[]>;
   getById(id: string | number): Promise<T | undefined>;
@@ -9,56 +7,80 @@ export interface CrudService<T extends { id: string }> {
   search(filter: Partial<T>): Promise<T[]>;
 }
 
-function getJsonFilename(tableName: string): string {
-  const tableMap: Record<string, string> = {
-    'Task': 'tasks.json',
-    'User': 'users.json',
-    'Room': 'rooms.json',
-    'Reservation': 'reservations.json',
-    'Payment': 'payments.json',
-    'Log': 'logs.json',
-    'HotelSettings': 'hotelSettings.json',
-    'Media': 'media.json',
-    'ContactMessage': 'contactMessages.json',
-    'Staff': 'staff.json',
-    'HousekeepingTask': 'housekeepingTasks.json',
-    'InventoryItem': 'inventoryItems.json',
-    'SeasonalRate': 'seasonalRates.json',
-  };
-  return tableMap[tableName] || `${tableName.toLowerCase()}s.json`;
-}
+const staticData: Record<string, any[]> = {
+  Staff: [
+    {
+      id: "c1",
+      name: "Marie Dubois",
+      email: "marie.dubois@citadel.com",
+      phone: "+33 6 12 34 56 78",
+      role: "Manager",
+      department: "Administration",
+      status: "ACTIVE",
+      hireDate: "2023-01-15",
+      createdAt: "2024-01-01T00:00:00.000Z",
+      updatedAt: "2024-01-01T00:00:00.000Z"
+    },
+    {
+      id: "c2",
+      name: "Jean-Pierre Martin",
+      email: "jean.martin@citadel.com",
+      phone: "+33 6 23 45 67 89",
+      role: "Receptionist",
+      department: "Front Desk",
+      status: "ACTIVE",
+      hireDate: "2023-06-01",
+      createdAt: "2024-01-01T00:00:00.000Z",
+      updatedAt: "2024-01-01T00:00:00.000Z"
+    }
+  ],
+  InventoryItem: [
+    { id: "c1", name: "Towels", category: "Linens", quantity: 100, unit: "pieces", minStock: 20, location: "Storage Room A", status: "OK", createdAt: "2024-01-01T00:00:00.000Z", updatedAt: "2024-01-01T00:00:00.000Z" },
+    { id: "c2", name: "Shampoo", category: "Toiletries", quantity: 50, unit: "bottles", minStock: 10, location: "Storage Room B", status: "OK", createdAt: "2024-01-01T00:00:00.000Z", updatedAt: "2024-01-01T00:00:00.000Z" }
+  ],
+  Media: [],
+  ContactMessage: [],
+  HousekeepingTask: [],
+  Task: [],
+  Log: [],
+  SeasonalRate: [],
+  User: [],
+  Payment: [],
+};
 
 export function createPrismaCrudService<T extends { id: string }>(
   tableName: string
 ): CrudService<T> {
-  const filename = getJsonFilename(tableName);
-  const storage = createJsonStorage<T>(filename, []);
+  const data = staticData[tableName] || [];
 
   return {
     async getAll() {
-      return storage.getAll();
+      return data as T[];
     },
 
     async getById(id) {
-      return storage.findById(String(id));
+      return data.find((item: any) => item.id === String(id)) as T | undefined;
     },
 
     async create(item) {
-      return storage.create(item as any);
+      const newItem = { ...item, id: "c" + Date.now() } as T;
+      return newItem;
     },
 
     async update(id, updates) {
-      const updated = storage.update(String(id), updates as any);
-      if (!updated) throw new Error('Not found');
-      return updated;
+      const existing = data.find((item: any) => item.id === String(id));
+      if (!existing) throw new Error('Not found');
+      return { ...existing, ...updates } as T;
     },
 
     async delete(id) {
-      return storage.delete(String(id));
+      return true;
     },
 
     async search(filter) {
-      return storage.findMany(filter as any);
+      return data.filter((item: any) =>
+        Object.entries(filter).every(([key, value]) => item[key] === value)
+      ) as T[];
     },
   };
 }
