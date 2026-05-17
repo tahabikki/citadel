@@ -1,4 +1,8 @@
-import * as local from './local-storage';
-import * as cloud from './cloud-storage';
-
-export const storage = process.env.STORAGE === 'cloud' ? cloud : local;
+export const storage = {
+  upload: async (file: File, folder: string): Promise<string> => {
+    return URL.createObjectURL(file);
+  },
+  deleteFile: async (url: string): Promise<void> => {
+    return;
+  },
+};
