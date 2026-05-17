@@ -1,0 +1,13 @@
+[
+  {
+    "id": "c1",
+    "email": "admin@citadel.com",
+    "password": "admin123",
+    "firstName": "Admin",
+    "lastName": "User",
+    "phone": "+33 1 23 45 67 89",
+    "role": "ADMIN",
+    "createdAt": "2024-01-01T00:00:00.000Z",
+    "updatedAt": "2024-01-01T00:00:00.000Z"
+  }
+]
