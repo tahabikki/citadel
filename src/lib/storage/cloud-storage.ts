@@ -1,5 +1,7 @@
-import { uploadFile } from '@/lib/supabase-storage';
-
 export async function upload(file: File, folder: string): Promise<string> {
-  return uploadFile(file, folder);
+  return URL.createObjectURL(file);
+}
+
+export async function deleteFile(url: string): Promise<void> {
+  return;
 }

@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { mediaService } from '@/lib/services/mediaService';
-import { deleteFileByUrl } from '@/lib/supabase-storage';
 
 export async function PUT(
   request: NextRequest,
@@ -27,15 +26,10 @@ export async function DELETE(
 ) {
   try {
     const { id } = await params;
-    const existing = await mediaService.getById(id);
     const deleted = await mediaService.delete(id);
 
     if (!deleted) {
       return NextResponse.json({ error: 'Media not found' }, { status: 404 });
-    }
-
-    if (existing?.url) {
-      await deleteFileByUrl(existing.url);
     }
 
     return NextResponse.json({ message: 'Media deleted successfully' });
