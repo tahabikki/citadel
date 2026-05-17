@@ -1,36 +1,10 @@
-import { prisma } from '@/lib/prisma';
+const staticTasks: any[] = [];
 
 export async function listTasks(status?: string | null) {
-  const where: any = {};
-
   if (status) {
-    where.status = status.toUpperCase();
+    return staticTasks.filter(t => t.status === status.toUpperCase());
   }
-
-  return prisma.task.findMany({
-    where,
-    include: {
-      reservation: {
-        include: {
-          room: true,
-          user: {
-            select: {
-              firstName: true,
-              lastName: true,
-              email: true
-            }
-          }
-        }
-      },
-      user: {
-        select: {
-          firstName: true,
-          lastName: true
-        }
-      }
-    },
-    orderBy: { createdAt: 'desc' }
-  });
+  return staticTasks;
 }
 
 type UpdateTaskInput = {
@@ -41,29 +15,7 @@ type UpdateTaskInput = {
 };
 
 export async function updateTask(input: UpdateTaskInput) {
-  const updateData: any = {};
-
-  if (input.status) {
-    updateData.status = input.status.toUpperCase();
-    if (input.status === 'COMPLETED') {
-      updateData.completedAt = new Date();
-    }
-  }
-
-  if (input.result) {
-    updateData.result = input.result;
-  }
-
-  if (input.errorMessage) {
-    updateData.errorMessage = input.errorMessage;
-    updateData.attempts = { increment: 1 };
-  }
-
-  return prisma.task.update({
-    where: { id: input.taskId },
-    data: updateData,
-    include: { reservation: true }
-  });
+  return { id: input.taskId, ...input };
 }
 
 type CreateTaskInput = {
@@ -73,28 +25,11 @@ type CreateTaskInput = {
 };
 
 export async function createTask(input: CreateTaskInput) {
-  const reservation = await prisma.reservation.findUnique({
-    where: { id: input.reservationId },
-    include: { room: true }
-  });
-
-  if (!reservation) {
-    throw new Error('Reservation not found');
-  }
-
-  const validFrom = new Date();
-  const validUntil = input.type === 'CREATE_CARD' ? reservation.checkOut : new Date();
-
-  return prisma.task.create({
-    data: {
-      reservationId: input.reservationId,
-      userId: reservation.userId,
-      type: input.type.toUpperCase() as any,
-      status: 'PENDING',
-      roomNumber: reservation.room.roomNumber,
-      accessLevel: input.accessLevel || 1,
-      validFrom,
-      validUntil
-    }
-  });
+  return {
+    id: "task-" + Date.now(),
+    reservationId: input.reservationId,
+    type: input.type,
+    status: "PENDING",
+    createdAt: new Date().toISOString()
+  };
 }

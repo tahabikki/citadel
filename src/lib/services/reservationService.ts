@@ -11,12 +11,12 @@ export const reservationService = {
     return reservationServiceJson.getById(String(id));
   },
 
-  async create(item: Omit<Reservation, 'id'>): Promise<Reservation> {
-    return reservationServiceJson.create(item as any);
+  async create(item: Partial<Reservation>): Promise<Reservation> {
+    return reservationServiceJson.create(item);
   },
 
   async update(id: string | number, updates: Partial<Reservation>): Promise<Reservation> {
-    return reservationServiceJson.update(String(id), updates as any);
+    return reservationServiceJson.update(String(id), updates);
   },
 
   async delete(id: string | number): Promise<boolean> {
@@ -24,6 +24,6 @@ export const reservationService = {
   },
 
   async search(filter: Partial<Reservation>): Promise<Reservation[]> {
-    return reservationServiceJson.search(filter as any);
+    return reservationServiceJson.search(filter);
   },
 };
