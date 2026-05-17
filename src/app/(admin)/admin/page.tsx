@@ -474,7 +474,7 @@ export default function AdminDashboard() {
           type: room.type,
           price: room.price,
           maxGuests: room.maxGuests || 2,
-          description: `${room.name} at Citadel HÃ´tel`,
+          description: `${room.name} at Citadel Hôtel`,
           amenities: room.amenities || [],
           images: room.imageUrl ? [room.imageUrl] : []
         })
@@ -879,12 +879,12 @@ export default function AdminDashboard() {
           <div className="relative w-16 h-16 mb-2 bg-white rounded-full p-2">
             <Image
               src="/logo/gold_logo.png"
-              alt="Citadel HÃ´tel"
+              alt="Citadel Hôtel"
               fill
               className="object-contain"
             />
           </div>
-          <span className="font-display text-base font-semibold text-white">Citadel HÃ´tel</span>
+          <span className="font-display text-base font-semibold text-white">Citadel Hôtel</span>
           <p className="text-xs text-white/50">Admin Dashboard</p>
         </div>
 
@@ -1710,7 +1710,7 @@ export default function AdminDashboard() {
                   <div className="space-y-3">
                     <div>
                       <label className="block text-sm text-[var(--secondary)] mb-1">Hotel Name</label>
-                      <input type="text" defaultValue="Citadel HÃ´tel" className="w-full px-4 py-2 border border-[var(--border-light)] rounded-[var(--radius-md)]" />
+                      <input type="text" defaultValue="Citadel Hôtel" className="w-full px-4 py-2 border border-[var(--border-light)] rounded-[var(--radius-md)]" />
                     </div>
                     <div>
                       <label className="block text-sm text-[var(--secondary)] mb-1">Address</label>
