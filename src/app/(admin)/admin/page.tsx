@@ -47,10 +47,10 @@ import {
 } from 'lucide-react';
 
 const languages = [
-  { code: 'en', name: 'English', flag: 'ðŸ‡¬ðŸ‡§' },
-  { code: 'fr', name: 'FranÃ§ais', flag: 'ðŸ‡«ðŸ‡·' },
-  { code: 'de', name: 'Deutsch', flag: 'ðŸ‡©ðŸ‡ª' },
-  { code: 'es', name: 'EspaÃ±ol', flag: 'ðŸ‡ªðŸ‡¸' },
+  { code: 'en', name: 'English', flag: '🇬🇧' },
+  { code: 'fr', name: 'Français', flag: '🇫🇷' },
+  { code: 'de', name: 'Deutsch', flag: '🇩🇪' },
+  { code: 'es', name: 'Español', flag: '🇪🇸' },
 ];
 
 interface Reservation {
@@ -1604,10 +1604,10 @@ export default function AdminDashboard() {
                             'bg-purple-50 text-purple-700'
                           }`}
                         >
-                          <option value="AVAILABLE">âœ“ Available</option>
-                          <option value="OCCUPIED">ðŸ‘¤ Occupied</option>
-                          <option value="MAINTENANCE">ðŸ”§ Maintenance</option>
-                          <option value="RESERVED">ðŸ“… Reserved</option>
+                          <option value="AVAILABLE">✓ Available</option>
+                          <option value="OCCUPIED">👤 Occupied</option>
+                          <option value="MAINTENANCE">🔧 Maintenance</option>
+                          <option value="RESERVED">📅 Reserved</option>
                         </select>
                       </div>
                     </div>
