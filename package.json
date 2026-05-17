@@ -17,10 +17,6 @@
     "db:push": "prisma db push",
     "db:studio": "prisma studio"
   },
-  "eslintConfig": {
-    "extends": ["next/core-web-vitals"],
-    "ignoreDuringBuilds": true
-  },
   "dependencies": {
     "@prisma/client": "5.22.0",
     "@supabase/auth-helpers-nextjs": "^0.10.0",
