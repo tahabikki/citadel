@@ -1,33 +1,33 @@
-const unsplashBase = "https://images.unsplash.com";
+const supabaseBase = "https://qciprvblelonmvdwkxam.supabase.co/storage/v1/object/public/hotel-media";
 
-export const mediaBaseUrl = unsplashBase;
-export const mediaImageFiles = [
-  "photo-1631049307264-da0ec9d70304",
-  "photo-1611892440504-42a792e24d32",
-  "photo-1590490360182-c33d57733427",
-  "photo-1566665797739-1674de7a421a",
-  "photo-1582719478250-c89cae4dc85b",
-  "photo-1618773928121-c32242e63f39",
-];
+export const mediaBaseUrl = supabaseBase;
+
+function padNumber(num: number): string {
+  return num.toString().padStart(3, '0');
+}
 
 export function mediaUrl(filename: string) {
   if (filename.startsWith('http') || filename.startsWith('/')) return filename;
-  return `${unsplashBase}/${filename}?w=800&h=600&fit=crop`;
+  return `${supabaseBase}/${filename}`;
 }
 
+export const mediaImageFiles: string[] = Array.from({ length: 88 }, (_, i) => `image_${padNumber(i + 1)}.jpg`);
+
+export const mediaVideoFiles: string[] = ["video_01.mp4"];
+
 export const images: string[] = mediaImageFiles.map(mediaUrl);
-export const videos: string[] = [];
+export const videos: string[] = mediaVideoFiles.map(mediaUrl);
 
 export const roomImages = {
-  single: "https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=800&h=600&fit=crop",
-  double: "https://images.unsplash.com/photo-1611892440504-42a792e24d32?w=800&h=600&fit=crop",
-  twin: "https://images.unsplash.com/photo-1590490360182-c33d57733427?w=800&h=600&fit=crop",
-  family: "https://images.unsplash.com/photo-1566665797739-1674de7a421a?w=800&h=600&fit=crop",
-  suite: "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=800&h=600&fit=crop",
+  single: `${supabaseBase}/image_001.jpg`,
+  double: `${supabaseBase}/image_005.jpg`,
+  twin: `${supabaseBase}/image_006.jpg`,
+  family: `${supabaseBase}/image_007.jpg`,
+  suite: `${supabaseBase}/image_008.jpg`,
 };
 
 export const hotelImages = {
-  exterior: "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800&h=600&fit=crop",
-  lobby: "https://images.unsplash.com/photo-1564501049412-61c2a3083791?w=800&h=600&fit=crop",
-  restaurant: "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=800&h=600&fit=crop",
+  exterior: `${supabaseBase}/image_011.jpg`,
+  lobby: `${supabaseBase}/image_012.jpg`,
+  restaurant: `${supabaseBase}/image_013.jpg`,
 };
